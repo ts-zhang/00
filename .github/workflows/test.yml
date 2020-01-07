@@ -4,7 +4,7 @@ name: push-greet
 on: [push]
 
 jobs:
-    build:
+    job1:
         #作业名称greet
         name: greet
         #运行环境
@@ -23,5 +23,14 @@ jobs:
             with:
                   name: "world"
             id: my-action
-
-
+    
+    job2:
+        name: docker
+        runs-on: macos-latest
+        steps:
+          - continue-on-error: false
+          - name: Display the path
+            run: |
+              import os
+              print(os.environ['PATH'])
+            shell: python
