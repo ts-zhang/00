@@ -1,28 +1,17 @@
-#push时候打招呼
-name: push-greet
+#push时候执行脚本
+name: push-script
 #触发事件：push
 on: [push]
 
 jobs:
     job1:
-        #作业名称greet
-        name: greet
+        name: ip
         #运行环境
-        runs-on: windows-latest
+        runs-on: ubuntu-latest
         steps:
-          - name: hello
-            uses: actions/hello-world-javascript-action@v1
-            with:
-                who-to-greet: "2020"
-            id: hello
-          - name: Echo time
-            run: echo 'The time was ${{ steps.hello.outputs.time }}'
-          
-          - name: "my-hello"
-            uses: ts-zhang/hello-world-javascript-action@v1
-            with:
-                  name: "world"
-            id: my-action
+          - name: ping google
+            run: ping google.com
+            shell: bash
     
     job2:
         name: docker
