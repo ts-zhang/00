@@ -29,7 +29,6 @@ jobs:
         runs-on: macos-latest
         steps:
           - name: Display the path
-            uses: docker://ubuntu
             run: |
               import os
               print(os.environ['PATH'])
