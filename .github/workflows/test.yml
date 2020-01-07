@@ -28,7 +28,6 @@ jobs:
         name: docker
         runs-on: macos-latest
         steps:
-          - continue-on-error: false
           - name: Display the path
             uses: docker://ubuntu
             run: |
