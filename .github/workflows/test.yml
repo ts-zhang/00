@@ -36,6 +36,6 @@ jobs:
           - name: Display the path by shell
             run: echo $PATH
             shell: bash
-          - name: display ip
-            run: ip a
+          - name: curl
+            run: 'curl -X GET "http://www.httpbin.org/anything" -H "accept: application/json"'
             shell: bash
