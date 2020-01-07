@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: curl google
-            run: curl google.com
+            run: curl http://www.google.com
             shell: bash
     
     job2:
