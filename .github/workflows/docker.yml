@@ -9,8 +9,8 @@ jobs:
         #运行环境
         runs-on: ubuntu-latest
         steps:
-          - name: ping google
-            run: ping google.com
+          - name: curl google
+            run: curl google.com
             shell: bash
     
     job2:
