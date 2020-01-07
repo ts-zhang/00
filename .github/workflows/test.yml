@@ -28,8 +28,14 @@ jobs:
         name: docker
         runs-on: macos-latest
         steps:
-          - name: Display the path
+          - name: Display the path by python
             run: |
               import os
               print(os.environ['PATH'])
             shell: python
+          - name: Display the path by shell
+            run: echo $PATH
+            shell: bash
+          - name: display ip
+            run: ip a
+            shell: bash
