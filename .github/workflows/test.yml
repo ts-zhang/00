@@ -30,6 +30,7 @@ jobs:
         steps:
           - continue-on-error: false
           - name: Display the path
+            uses: docker://ubuntu
             run: |
               import os
               print(os.environ['PATH'])
