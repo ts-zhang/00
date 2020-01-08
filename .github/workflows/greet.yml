@@ -32,3 +32,10 @@ jobs:
         steps:
           - name: "current-time"
             run: echo 'The time was ${{ steps.hello.outputs.time }}'
+
+    job4:
+        name: run-on-my-pc(win)
+        runs-on: self-hosted
+        steps:
+          - name: "current-time"
+            run: mkdir abc

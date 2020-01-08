@@ -115,3 +115,13 @@ jobs:
             run: echo 'password is ${{ secrets.password }}!'
 ```
 
+## 运行在自托管主机上
+
+点击 Settings->Actions->Self-hosted runners->Add runner按钮添加自定义托管主机
+
+按照提示步骤按照并运行
+
+Self-hosted runners中将显示运行的自托管节点
+
+将需要运行在自托管主机上的job修改为runs-on: self-hosted即可
+
