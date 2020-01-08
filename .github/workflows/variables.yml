@@ -5,7 +5,7 @@ on: [push]
 
 jobs:
     job1:
-        #显示默认变量
+        #显示默认环境变量
         name: show-home
         #运行环境
         runs-on: windows-latest
@@ -15,6 +15,7 @@ jobs:
             id: home
     
     job2:
+        #显示自定义环境变量
         name: show-env-variables
         runs-on: ubuntu-latest
         steps:
@@ -25,6 +26,7 @@ jobs:
               middle_name: The
               Last_Name: Octocat
     job3:
+        #显示密码变量
         name: show-secrets
         runs-on: macos-latest
         steps:

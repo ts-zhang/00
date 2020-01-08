@@ -72,4 +72,46 @@ jobs:
 
 ## 变量使用
 
-使用变量及密码变量
+变量分为三种类型
+
+1. [默认环境变量](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/using-environment-variables#default-environment-variables) - job1
+2. [通过env传递的环境变量](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/using-environment-variables#about-environment-variables) - job2
+3. 用户创建的[encrypted-secrets](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets#creating-encrypted-secrets)变量 - job3
+
+```
+#push时候显示变量的值
+name: show-variables
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        #显示默认环境变量
+        name: show-home
+        #运行环境
+        runs-on: windows-latest
+        steps:
+          - name: home
+            run: echo $HOME
+            id: home
+    
+    job2:
+        #显示自定义环境变量
+        name: show-env-variables
+        runs-on: ubuntu-latest
+        steps:
+          - name: Hello world
+            run: echo Hello world $FIRST_NAME $middle_name $Last_Name!
+            env:
+              FIRST_NAME: Mona
+              middle_name: The
+              Last_Name: Octocat
+    job3:
+        #显示密码变量
+        name: show-secrets
+        runs-on: macos-latest
+        steps:
+          - name: secrets
+            run: echo 'password is ${{ secrets.password }}!'
+```
+
