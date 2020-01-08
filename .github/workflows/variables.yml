@@ -18,11 +18,12 @@ jobs:
         name: show-env-variables
         runs-on: ubuntu-latest
         steps:
-          - name: args
-            run: echo 'args = ${{ arg1 }} - ${{ arg2 }}'
+          - name: Hello world
+            run: echo Hello world $FIRST_NAME $middle_name $Last_Name!
             env:
-              arg1: hello
-              arg2: world
+              FIRST_NAME: Mona
+              middle_name: The
+              Last_Name: Octocat
     job3:
         name: show-secrets
         runs-on: macos-latest
