@@ -125,3 +125,11 @@ Self-hosted runners中将显示运行的自托管节点
 
 将需要运行在自托管主机上的job修改为runs-on: self-hosted即可
 
+push代码后发现自托管节点输出如下：
+```
+2020-01-08 14:37:02Z: Running job: run-on-my-pc(win)
+2020-01-08 14:37:11Z: Job run-on-my-pc(win) completed with result: Succeeded
+```
+job在自托管节点中执行成功
+
+启动多个自托管节点，执行任务
