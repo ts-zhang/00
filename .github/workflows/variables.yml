@@ -19,7 +19,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: args
-            run: echo 'args = $arg1 - $arg2'
+            run: echo 'args = ${{ arg1 }} - ${{ arg2 }}'
             env:
               arg1: hello
               arg2: world
