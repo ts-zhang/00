@@ -1,0 +1,31 @@
+#push时候显示变量的值
+name: show-variables
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        #显示默认变量
+        name: show-home
+        #运行环境
+        runs-on: windows-latest
+        steps:
+          - name: home
+            run: echo $HOME
+            id: home
+    
+    job2:
+        name: show-env-variables
+        runs-on: ubuntu-latest
+        steps:
+          - name: args
+            run: echo 'args = $arg1 - $arg2'
+            env:
+              arg1: hello
+              arg2: world
+    job3:
+        name: show-secrets
+        runs-on: macos-latest
+        steps:
+          - name: secrets
+            run: echo 'password is ${{ secrets.password }}!'

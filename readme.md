@@ -36,3 +36,40 @@ jobs:
 ```
 
 ## docker使用
+
+```
+#push时候执行脚本
+name: push-script
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        name: ip
+        #运行环境
+        runs-on: ubuntu-latest
+        steps:
+          - name: curl google
+            run: curl http://www.google.com
+            shell: bash
+    
+    job2:
+        name: docker
+        runs-on: macos-latest
+        steps:
+          - name: Display the path by python
+            run: |
+              import os
+              print(os.environ['PATH'])
+            shell: python
+          - name: Display the path by shell
+            run: echo $PATH
+            shell: bash
+          - name: curl
+            run: 'curl -X GET "http://www.httpbin.org/anything" -H "accept: application/json"'
+            shell: bash
+```
+
+## 变量使用
+
+使用变量及密码变量
