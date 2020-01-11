@@ -133,3 +133,16 @@ push代码后发现自托管节点输出如下：
 job在自托管节点中执行成功
 
 启动多个自托管节点，执行任务，发现任务在其中一个节点执行，如果一个节点挂掉，下次任务会在另一个节点执行，通过此特性可以实现任务托管的高可用
+
+## 持久化job数据
+
+主要使用[upload-artifact](https://github.com/actions/upload-artifact)和[download-artifact](https://github.com/actions/download-artifact)组件
+
+通过**upload-artifact**上传文件，主要用途如下
+
+- 日志文件和核心转储文件
+- 测试结果、失败和屏幕截图
+- 二进制或存档文件
+- 压力测试性能输出和代码覆盖结果
+- 在不同job中共享数据 需要使用**download-artifact**下载文件
+
