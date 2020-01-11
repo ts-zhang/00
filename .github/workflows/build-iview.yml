@@ -3,7 +3,7 @@ name: build iview
 on: [push]
 
 jobs:
-  build_and_test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -17,4 +17,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: dist
-          path: dist
+          path: iview-admin/dist
