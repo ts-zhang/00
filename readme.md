@@ -1,6 +1,6 @@
 # 工作流使用 - [使用 GitHub 操作自动化工作流程](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions)
 
-![](https://github.com/ts-zhang/00/workflows/push-greet/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/not-pass/badge.svg)
+![](https://github.com/ts-zhang/00/workflows/push-greet/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/not-pass/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/build%20iview/badge.svg)
 
 ## action使用
 
@@ -146,3 +146,35 @@ job在自托管节点中执行成功
 - 压力测试性能输出和代码覆盖结果
 - 在不同job中共享数据 需要使用**download-artifact**下载文件
 
+nodejs项目自动打包
+
+步骤：
+
+1. 代码checkout
+
+2. 执行 ```npm install``` 和 ```npm build``` 命令
+
+3. 将打包后的dist目录上传
+
+```
+name: build iview
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: npm install, build
+        run: |
+          cd iview-admin
+          npm install
+          npm run build --if-present
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: iview-admin/dist
+```
