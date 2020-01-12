@@ -1,5 +1,5 @@
 #push时候使用自己的action输出
-name: use-my-echo
+name: docker-echo
 #触发事件：push
 on: [push]
 
