@@ -474,7 +474,9 @@ jobs:
             dep ensure
         fi
     - name: Build
-      run: go build -v .
+      run: |
+        cd go-demo
+        go build -v .
 ```
 3.提交代码后会自动执行```go build```
 
