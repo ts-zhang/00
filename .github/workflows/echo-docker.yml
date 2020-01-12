@@ -1,0 +1,15 @@
+#push时候使用自己的action输出
+name: use-my-echo
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        name: docker-echo
+        runs-on: ubuntu-latest
+        steps:
+          - name: echo
+            uses: ts-zhang/docker-echo-action@master
+            with:
+                echo-what: "my docker echo action works."
+            id: echo
