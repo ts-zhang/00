@@ -115,6 +115,17 @@ jobs:
             run: echo 'password is ${{ secrets.password }}!'
 ```
 
+## 托管主机
+
+操作系统
+- Ubuntu 16.04 LTS
+- Ubuntu 18.04 LTS
+- Windows Server 2016
+- Windows Server 2019
+- macOS 10.15
+
+[已安装软件列表](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/software-installed-on-github-hosted-runners)
+
 ## 运行在自托管主机上
 
 点击 Settings->Actions->Self-hosted runners->Add runner按钮添加自定义托管主机
@@ -179,7 +190,7 @@ jobs:
           path: iview-admin/dist
 ```
 
-使用cache将npm包缓存起来
+使用[cache](https://github.com/actions/cache)将npm包缓存起来
 
 ```
 - name: Cache node modules
@@ -192,3 +203,39 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 ```
+针对不同语言的包缓存[cache](https://github.com/actions/cache/blob/master/examples.md)
+
+## [触发事件](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)
+
+| Webhook事件 | 描述 | 活动类型 |
+| ----- | ----- | ----- |
+| check_run | 检查运行 | created,rerequested,completed,requested_action |
+| check_suite | 检查套件 | completed,requested,rerequested |
+| create | 创建分支/标记 | n/a |
+| delete | 删除分支/标记 | n/a |
+| deployment | 部署 | n/a |
+| deployment_status | 部署状态 | n/a	|
+| fork | 复刻 | n/a |
+| gollum | wiki更新 | n/a |
+| issue_comment | 议题评论 | created,edited,deleted |
+| issues | 议题 | opened,edited,deleted,... |
+| label | 标签 | created,edited,deleted |
+| member | 成员 | added,edited,deleted |
+| milestone | 里程碑 | opened,deleted |
+| page_build | 页面构建 | n/a |
+| project | 项目 | created,deleted |
+| project_card | 项目卡 | opened,deleted |
+| project_column | 项目列 | created,updated | 
+| public | 私库公开 | n/a |
+| pull_request | 拉请求 | assigned,unassigned,labeled... |
+| pull_request_review | 拉请求审查 | submitted,edited,dismissed | 
+| pull_request_review_comment | 拉请求审查评论 | created,edited,deleted |
+| push | 推送 | n/a |
+| release | 版本发布 | published,unpublished,created... |
+| status | 提交状态变化 | n/a |
+| watch | 关注 | started |
+| schedule | 定时调度 | n/a |
+| repository_dispatch | 创建仓库分发 | n/a |
+
+## [创建自己的action](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/creating-a-javascript-action)
+

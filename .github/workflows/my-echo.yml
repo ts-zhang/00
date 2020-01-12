@@ -1,0 +1,16 @@
+#push时候使用自己的action输出
+name: use-my-echo
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        name: js-echo
+        runs-on: windows-latest
+        steps:
+          - name: echo
+            uses: ts-zhang/js-echo-action
+            with:
+                echo-what: "my js echo action works."
+            id: echo
+    
