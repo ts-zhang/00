@@ -237,5 +237,114 @@ jobs:
 | schedule | 定时调度 | n/a |
 | repository_dispatch | 创建仓库分发 | n/a |
 
-## [创建自己的action](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/creating-a-javascript-action)
+## [创建自己的javascript action](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/creating-a-javascript-action)
+
+预备工作
+
+1. 安装nodejs和npm
+2. 在github中创建仓库js-echo-action
+3. clone到本地
+4. 使用```npm init -y```命令初始化
+
+开始创建action
+
+1. 创建元数据文件action.yml
+
+```
+name: 'echo'
+description: 'Echo someone and record the time'
+inputs:
+  echo-what:  # 输入 id
+    description: 'What to echo'
+    required: true
+    default: 'hello'
+outputs:
+  time: # 输出 id
+    description: 'The time we greeted you'
+runs:
+  using: 'node12'
+  main: 'index.js'
+```
+
+2.添加操作工具包
+
+```
+npm install @actions/core
+npm install @actions/github
+```
+
+3.编写操作js代码 index.js
+
+```js
+const core = require('@actions/core');
+const github = require('@actions/github');
+
+try {
+  // `echo-what` input defined in action metadata file
+  const whatToEcho = core.getInput('echo-what');
+  console.log(`Hello ${whatToEcho}!`);
+  const time = (new Date()).toTimeString();
+  core.setOutput("time", time);
+  // Get the JSON webhook payload for the event that triggered the workflow
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`);
+} catch (error) {
+  core.setFailed(error.message);
+}
+```
+
+4.编写描述文件 README.md
+
+```md
+# Echo javascript action
+
+此操作将 "Hello World" 或 "Hello" + 要问候的人员的姓名打印到日志。
+
+## Inputs
+
+### `echo-what`
+
+**必填** 要问候的人员的姓名。 默认值为 `"World"`。
+
+## Outputs
+
+### `time`
+
+我们问候您的时间。
+
+## Example usage
+
+使用：actions/js-echo-action@v1
+及：
+  echo-what: 'Tom'
+
+```
+
+5.提交到git仓库
+```
+git add .
+git commit -m "添加action文件"
+git push
+```
+
+6.使用自己的action
+
+```
+#push时候使用自己的action输出
+name: use-my-echo
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        name: js-echo
+        runs-on: windows-latest
+        steps:
+          - name: echo
+            uses: ts-zhang/js-echo-action@master
+            with:
+                echo-what: "my js echo action works."
+            id: echo
+    
+```
 
