@@ -9,7 +9,7 @@ jobs:
         runs-on: windows-latest
         steps:
           - name: echo
-            uses: ts-zhang/js-echo-action
+            uses: ts-zhang/js-echo-action@v1
             with:
                 echo-what: "my js echo action works."
             id: echo
