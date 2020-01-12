@@ -476,7 +476,7 @@ jobs:
     - name: Build
       run: |
         cd go-demo
-        go build -v .
+        go build -v ./go-demo
 ```
 3.提交代码后会自动执行```go build```
 
