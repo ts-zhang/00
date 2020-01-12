@@ -7,7 +7,7 @@
 hello使用github的hello-world-javascript-action
 
 my-hello使用自定义action [hello-world-javascript-action](https://github.com/ts-zhang/hello-world-javascript-action)
-```
+```yml
 #push时候打招呼
 name: push-greet
 #触发事件：push
@@ -37,7 +37,7 @@ jobs:
 
 ## docker使用
 
-```
+```yml
 #push时候执行脚本
 name: push-script
 #触发事件：push
@@ -78,7 +78,7 @@ jobs:
 2. [通过env传递的环境变量](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/using-environment-variables#about-environment-variables) - job2
 3. 用户创建的[encrypted-secrets](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets#creating-encrypted-secrets)变量 - job3
 
-```
+```yml
 #push时候显示变量的值
 name: show-variables
 #触发事件：push
@@ -167,7 +167,7 @@ nodejs项目自动打包
 
 3. 将打包后的dist目录上传
 
-```
+```yml
 name: build iview
 
 on: [push]
@@ -192,7 +192,7 @@ jobs:
 
 使用[cache](https://github.com/actions/cache)将npm包缓存起来
 
-```
+```yml
 - name: Cache node modules
       uses: actions/cache@v1
       with:
@@ -250,7 +250,7 @@ jobs:
 
 1. 创建元数据文件action.yml
 
-```
+```yml
 name: 'echo'
 description: 'Echo someone and record the time'
 inputs:
@@ -329,7 +329,7 @@ git push
 
 6.使用自己的action
 
-```
+```yml
 #push时候使用自己的action输出
 name: use-my-echo
 #触发事件：push
@@ -348,3 +348,95 @@ jobs:
     
 ```
 
+## [创建自己的docker action](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/creating-a-docker-container-action)
+
+1. 创建元数据文件action.yml
+```yml
+name: 'echo'
+description: 'Echo someone and record the time'
+inputs:
+  echo-what:  # 输入 id
+    description: 'What to echo'
+    required: true
+    default: 'hello'
+outputs:
+  time: # 输出 id
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.echo-what }}
+```
+2.编写Dockerfile
+```Dockerfile
+# 运行代码的容器图像
+FROM alpine:3.10
+
+# 从操作仓科到容器的文件系统路径 `/`的副本
+COPY entrypoint.sh /entrypoint.sh
+
+# 添加执行权限
+RUN chmod +x /entrypoint.sh
+
+# Docker 容器启动时执行的代码文件 (`entrypoint.sh`)
+ENTRYPOINT ["/entrypoint.sh"]
+```
+3.编写脚本文件 entrypoint.sh
+```bash
+#!/bin/sh -l
+
+echo "Hello $1"
+time=$(date)
+echo ::set-output name=time::$time
+```
+4.编写描述文件 README.md
+```md
+# Echo docker action
+
+此操作将 "Hello World" 或 "Hello" + 要问候的人员的姓名打印到日志。
+
+## Inputs
+
+### `echo-what`
+
+**必填** 要问候的人员的姓名。 默认值为 `"World"`。
+
+## Outputs
+
+### `time`
+
+我们问候您的时间。
+
+## Example usage
+
+使用：actions/docker-echo-action@master
+及：
+  echo-what: 'Tom'
+```
+5.提交到git仓库
+```
+git add .
+git commit -m "添加action文件"
+git push
+```
+6.使用自己的action
+
+```yml
+#push时候使用自己的action输出
+name: docker-echo
+#触发事件：push
+on: [push]
+
+jobs:
+    job1:
+        name: docker-echo
+        runs-on: ubuntu-latest
+        steps:
+          - name: echo
+            uses: ts-zhang/docker-echo-action@master
+            with:
+                echo-what: "my docker echo action works."
+            id: echo
+
+```
