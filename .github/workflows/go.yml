@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: |
         cd go-demo
-        go build -v ./dist
+        go build -o dist/app -v .
     - name: Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
