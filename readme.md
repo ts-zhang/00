@@ -1,6 +1,6 @@
 # 工作流使用 - [使用 GitHub 操作自动化工作流程](https://help.github.com/cn/actions/automating-your-workflow-with-github-actions)
 
-![](https://github.com/ts-zhang/00/workflows/push-greet/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/not-pass/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/build%20iview/badge.svg)
+![](https://github.com/ts-zhang/00/workflows/push-greet/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/not-pass/badge.svg)  ![](https://github.com/ts-zhang/00/workflows/build%20iview/badge.svg) ![](https://github.com/ts-zhang/00/workflows/Go/badge.svg)
 
 ## action使用
 
@@ -440,3 +440,43 @@ jobs:
             id: echo
 
 ```
+
+## golang项目持续集成
+
+1.创建golang项目go-demo
+
+2.创建go.yml文件
+```yml
+name: Go
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Get dependencies
+      run: |
+        cd go-demo
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+    - name: Build
+      run: go build -v .
+```
+3.提交代码后会自动执行```go build```
+
+4.[更多ci模板](https://github.com/actions/starter-workflows/tree/master/ci)
+
